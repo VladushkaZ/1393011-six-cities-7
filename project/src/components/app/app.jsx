@@ -12,6 +12,7 @@ function App(props) {
   const { numbers } = props;
   const { cities } = props;
   const { popular } = props;
+  const { properties } = props;
   return (
 
     <BrowserRouter>
@@ -20,10 +21,10 @@ function App(props) {
           <MainScreen numbers={numbers} cities={cities} popular={popular} />
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <PropertyCard />
+          <PropertyCard properties={properties} numbers={numbers}/>
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesCard />
+          <FavoritesCard numbers={numbers} cities={cities}/>
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginPage />
@@ -40,6 +41,7 @@ App.propTypes = {
   numbers: PropTypes.number.isRequired,
   cities: PropTypes.array.isRequired,
   popular: PropTypes.array.isRequired,
+  properties: PropTypes.array.isRequired,
 };
 
 export default App;
