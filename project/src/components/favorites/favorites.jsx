@@ -1,21 +1,27 @@
 import React from 'react';
 import FavoriteCard from '../favorite-card/favorite-card';
 import PropTypes from 'prop-types';
-
+import offerProp from '../place-card/offer-prop';
 function FavoritesCard(props) {
-  const numbers = new Array(props.numbers).fill(1);
-  const FavoriteCards = numbers.map((number) => (
-    <div key={number} className="favorites__card place-card">
-      < FavoriteCard />
-    </div>
+  const FavoriteCards = props.offers.map((offer) => (
+    offer.isFavorite?
+      <div key={offer.id} className="favorites__card place-card">
+        <FavoriteCard
+          id={offer.id}
+          previewImage={offer.previewImage}
+          price={offer.price}
+          rating={offer.rating}
+          title={offer.title}
+          type={offer.type}
+        />
+      </div>:''
   ));
-  const cities = props.cities;
-  const FavoriteCities = cities.map((city) => (
-    <li key={city} className="favorites__locations-items">
+  const FavoriteCities = props.offers.map((offer) => (
+    <li key={offer.id} className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">
-            <span>{city}</span>
+            <span>{offer.city.name}</span>
           </a>
         </div>
       </div>
@@ -30,7 +36,7 @@ function FavoritesCard(props) {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <a className="header__logo-link" href="/">
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -75,7 +81,7 @@ function FavoritesCard(props) {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <a className="footer__logo-link" href="/">
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -90,8 +96,9 @@ function FavoritesCard(props) {
 }
 
 FavoritesCard.propTypes = {
-  numbers: PropTypes.number.isRequired,
-  cities: PropTypes.array.isRequired,
+  offers: PropTypes.arrayOf(
+    PropTypes.oneOfType([offerProp]).isRequired,
+  ).isRequired,
 };
 
 export default FavoritesCard;

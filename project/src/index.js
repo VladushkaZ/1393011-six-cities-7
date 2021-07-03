@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
+import {Reviews} from './mocks/review';
+import {Offers} from './mocks/offers';
+
 const Setting = {
   NUMBERS: 3,
   CITIES: ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'],
@@ -11,6 +14,6 @@ const Setting = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App properties={Setting.PROPERTIES} numbers={Setting.NUMBERS} cities={Setting.CITIES} popular={Setting.POPULAR} />
+    <App properties={Setting.PROPERTIES} numbers={Setting.NUMBERS} cities={Setting.CITIES} popular={Setting.POPULAR} offers={Offers} reviews={Reviews}/>
   </React.StrictMode>,
   document.getElementById('root'));

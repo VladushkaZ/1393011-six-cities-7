@@ -1,14 +1,9 @@
 import React from 'react';
-import PlaceCard from '../place-card/place-card';
+import PlaceCards from '../place-card/card-list';
 import PropTypes from 'prop-types';
+import offerProp from '../place-card/offer-prop';
 
 function MainScreen(props) {
-  const numbers = new Array(props.numbers).fill(1);
-  const PlaceCards = numbers.map((number) => (
-    <div key={number}>
-      <PlaceCard />
-    </div>
-  ));
   const cities = props.cities;
   const LocationCities = cities.map((city) => (
     <li key={city} className="locations__item">
@@ -88,7 +83,9 @@ function MainScreen(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {PlaceCards}
+                <PlaceCards
+                  offers={props.offers}
+                />
               </div>
             </section>
             <div className="cities__right-section">
@@ -102,7 +99,7 @@ function MainScreen(props) {
 }
 
 MainScreen.propTypes = {
-  numbers: PropTypes.number.isRequired,
+  ...offerProp,
   cities: PropTypes.array.isRequired,
   popular: PropTypes.array.isRequired,
 };
