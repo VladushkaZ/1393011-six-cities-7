@@ -1,14 +1,10 @@
 import React from 'react';
-import PlaceCard from '../place-card/place-card';
+import PlaceCards from '../place-card/card-list';
 import PropTypes from 'prop-types';
-
+import offerProp from '../place-card/offer-prop';
+import {AppRoute} from '../../const';
+import {Link} from 'react-router-dom';
 function MainScreen(props) {
-  const numbers = new Array(props.numbers).fill(1);
-  const PlaceCards = numbers.map((number) => (
-    <div key={number}>
-      <PlaceCard />
-    </div>
-  ));
   const cities = props.cities;
   const LocationCities = cities.map((city) => (
     <li key={city} className="locations__item">
@@ -42,20 +38,20 @@ function MainScreen(props) {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
+                    to={AppRoute.FAVORITES}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to={AppRoute.LOGIN}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -88,7 +84,9 @@ function MainScreen(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {PlaceCards}
+                <PlaceCards
+                  offers={props.offers}
+                />
               </div>
             </section>
             <div className="cities__right-section">
@@ -102,7 +100,7 @@ function MainScreen(props) {
 }
 
 MainScreen.propTypes = {
-  numbers: PropTypes.number.isRequired,
+  ...offerProp,
   cities: PropTypes.array.isRequired,
   popular: PropTypes.array.isRequired,
 };
