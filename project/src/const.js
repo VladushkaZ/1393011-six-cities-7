@@ -4,3 +4,5 @@ export const AppRoute = {
   ROOM: '/offer/:id',
   ROOT: '/',
 };
+
+export const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

@@ -1,6 +1,6 @@
 import React from 'react';
 import reviewProp from './review-prop';
-
+import {monthNames} from '../../const';
 function PlaceReview(review) {
   const {
     //id,
@@ -34,7 +34,9 @@ function PlaceReview(review) {
           {comment}
         </p>
         <time className="reviews__time" dateTime={date}>
-          {date}
+          {monthNames[Number(date.substr(5,2))]}
+          &nbsp;
+          {date.substr(0,4)}
         </time>
       </div>
     </div>

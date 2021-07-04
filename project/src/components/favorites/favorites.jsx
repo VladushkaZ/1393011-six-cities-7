@@ -2,9 +2,11 @@ import React from 'react';
 import FavoriteCard from '../favorite-card/favorite-card';
 import PropTypes from 'prop-types';
 import offerProp from '../place-card/offer-prop';
+import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
 function FavoritesCard(props) {
-  const FavoriteCards = props.offers.map((offer) => (
-    offer.isFavorite?
+  const FavoriteCards = props.offers.map((offer) =>
+    offer.isFavorite ? (
       <div key={offer.id} className="favorites__card place-card">
         <FavoriteCard
           id={offer.id}
@@ -14,29 +16,31 @@ function FavoritesCard(props) {
           title={offer.title}
           type={offer.type}
         />
-      </div>:''
-  ));
-  const FavoriteCities = props.offers.map((offer) => (
+      </div>
+    ) : (
+      ''
+    ));
+  /*const FavoriteCities = props.offers.map((offer) => (
     <li key={offer.id} className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link className="locations__item-link" to="">
             <span>{offer.city.name}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">
         {FavoriteCards}
       </div>
     </li>
-  ));
+  ));*/
   return (
     <div className="page">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="/">
+              <Link className="header__logo-link" to={AppRoute.ROOT}>
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -44,25 +48,25 @@ function FavoritesCard(props) {
                   width="81"
                   height="41"
                 />
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
+                    to={AppRoute.FAVORITES}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to={AppRoute.LOGIN}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -75,7 +79,16 @@ function FavoritesCard(props) {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {FavoriteCities}
+              <li className="favorites__locations-items">
+                <div className="favorites__locations locations locations--current">
+                  <div className="locations__item">
+                    <Link className="locations__item-link" to="">
+                      <span>Amsterdam</span>
+                    </Link>
+                  </div>
+                </div>
+                <div className="favorites__places">{FavoriteCards}</div>
+              </li>
             </ul>
           </section>
         </div>
@@ -96,9 +109,8 @@ function FavoritesCard(props) {
 }
 
 FavoritesCard.propTypes = {
-  offers: PropTypes.arrayOf(
-    PropTypes.oneOfType([offerProp]).isRequired,
-  ).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.oneOfType([offerProp]).isRequired)
+    .isRequired,
 };
 
 export default FavoritesCard;

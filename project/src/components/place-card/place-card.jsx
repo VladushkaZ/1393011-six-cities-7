@@ -1,8 +1,7 @@
 import React from 'react';
-import {AppRoute} from '../../const';
 import offerProp from './offer-prop';
 import {Link} from 'react-router-dom';
-
+import {AppRoute} from '../../const';
 function PlaceCard(offer) {
   const {
     id,

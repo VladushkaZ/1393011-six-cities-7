@@ -2,7 +2,8 @@ import React from 'react';
 import PlaceCards from '../place-card/card-list';
 import PropTypes from 'prop-types';
 import offerProp from '../place-card/offer-prop';
-
+import {AppRoute} from '../../const';
+import {Link} from 'react-router-dom';
 function MainScreen(props) {
   const cities = props.cities;
   const LocationCities = cities.map((city) => (
@@ -37,20 +38,20 @@ function MainScreen(props) {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
+                    to={AppRoute.FAVORITES}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to={AppRoute.LOGIN}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>

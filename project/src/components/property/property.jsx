@@ -4,6 +4,8 @@ import PlaceReview from '../review/review';
 import PlaceCard from '../place-card/place-card';
 import reviewProp from '../review/review-prop';
 import ReviewForm from '../review/add-review';
+import {AppRoute} from '../../const';
+import {Link} from 'react-router-dom';
 
 function PropertyCard(props) {
   const offerId = Number(window.location.pathname.split('=')[1]);
@@ -34,7 +36,7 @@ function PropertyCard(props) {
       />
     </li>
   ));
-  const ShortCards = props.offers.slice(0,2);
+  const ShortCards = props.offers.slice(0,3);
   const PlaceCards = ShortCards.map((offer) => (
     <div key={offer.id}>
       <PlaceCard
@@ -55,7 +57,7 @@ function PropertyCard(props) {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="/">
+              <Link className="header__logo-link" to = {AppRoute.ROOT}>
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -63,25 +65,25 @@ function PropertyCard(props) {
                   width="81"
                   height="41"
                 />
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
+                    to = {AppRoute.FAVORITES}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to = {AppRoute.LOGIN}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
