@@ -1,8 +1,9 @@
 import React from 'react';
 import PlaceCards from '../place-card/card-list';
+import Map from '../map/map';
 import PropTypes from 'prop-types';
 import offerProp from '../place-card/offer-prop';
-import {AppRoute} from '../../const';
+import {AppRoute, CITY} from '../../const';
 import {Link} from 'react-router-dom';
 function MainScreen(props) {
   const cities = props.cities;
@@ -90,7 +91,7 @@ function MainScreen(props) {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map" ><Map city={CITY} offers={props.offers}/></section>
             </div>
           </div>
         </div>
