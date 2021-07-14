@@ -1,12 +1,12 @@
 import React from 'react';
 //import PropTypes from 'prop-types';
 import PlaceReview from '../review/review';
-import PlaceCard from '../place-card/place-card';
+import NearPlaceCards from '../place-near/place-near-list';
 import reviewProp from '../review/review-prop';
 import ReviewForm from '../review/add-review';
-import {AppRoute} from '../../const';
+import {AppRoute, CITY} from '../../const';
 import {Link} from 'react-router-dom';
-
+import Map from '../map/map';
 function PropertyCard(props) {
   const offerId = Number(window.location.pathname.split('=')[1]);
   const {description, price, maxAdults, isFavorite, host, rating, title, type, bedrooms, isPremium, images, goods} = props.offers[offerId-1];
@@ -28,28 +28,9 @@ function PropertyCard(props) {
   const PlaceReviews = props.reviews.map((review) => (
     <li key={review.id}>
       <PlaceReview
-        id={review.id}
-        comment={review.comment}
-        date={review.date}
-        rating={review.rating}
-        user={review.user}
+        {...review}
       />
     </li>
-  ));
-  const ShortCards = props.offers.slice(0,3);
-  const PlaceCards = ShortCards.map((offer) => (
-    <div key={offer.id}>
-      <PlaceCard
-        id={offer.id}
-        previewImage={offer.previewImage}
-        price={offer.price}
-        isFavorite={offer.isFavorite}
-        isPremium={offer.isPremium}
-        rating={offer.rating}
-        title={offer.title}
-        type={offer.type}
-      />
-    </div>
   ));
   return (
     <div className="page">
@@ -184,7 +165,7 @@ function PropertyCard(props) {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map"><Map city={CITY} offers={props.offers.slice(0,3)}/></section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -192,7 +173,7 @@ function PropertyCard(props) {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              {PlaceCards}
+              <NearPlaceCards offers={props.offers}/>
             </div>
           </section>
         </div>

@@ -1,16 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PlaceCard from '../place-card/place-card';
 import offerProp from '../place-card/offer-prop';
 import PropTypes from 'prop-types';
 
-function PlaceCards({offers}) {
-  const [activeCard, setActiveCard] = useState(false);
-  return offers.map((offer) => (
+function NearPlaceCards({offers}) {
+  const ShortCards = offers.slice(0,3);
+  return ShortCards.map((offer) => (
     <div key={offer.id}>
       <PlaceCard
         {...offer}
-        checked={activeCard[offer.id]}
-        onMouseEnter={setActiveCard}
       />
     </div>
   ));
@@ -22,4 +20,4 @@ PlaceCard.propTypes = {
   ).isRequired,
 };
 
-export default PlaceCards;
+export default NearPlaceCards;
