@@ -8,7 +8,14 @@ function PlaceCards({offers}) {
   return offers.map((offer) => (
     <div key={offer.id}>
       <PlaceCard
-        {...offer}
+        id={offer.id}
+        previewImage={offer.previewImage}
+        price={offer.price}
+        isFavorite={offer.isFavorite}
+        isPremium={offer.isPremium}
+        rating={offer.rating}
+        title={offer.title}
+        type={offer.type}
         checked={activeCard[offer.id]}
         onMouseEnter={setActiveCard}
       />

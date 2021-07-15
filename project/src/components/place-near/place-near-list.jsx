@@ -4,11 +4,17 @@ import offerProp from '../place-card/offer-prop';
 import PropTypes from 'prop-types';
 
 function NearPlaceCards({offers}) {
-  const ShortCards = offers.slice(0,3);
-  return ShortCards.map((offer) => (
+  return offers.slice(0,3).map((offer) => (
     <div key={offer.id}>
       <PlaceCard
-        {...offer}
+        id={offer.id}
+        previewImage={offer.previewImage}
+        price={offer.price}
+        isFavorite={offer.isFavorite}
+        isPremium={offer.isPremium}
+        rating={offer.rating}
+        title={offer.title}
+        type={offer.type}
       />
     </div>
   ));

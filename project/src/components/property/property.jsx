@@ -28,7 +28,11 @@ function PropertyCard(props) {
   const PlaceReviews = props.reviews.map((review) => (
     <li key={review.id}>
       <PlaceReview
-        {...review}
+        id={review.id}
+        comment={review.comment}
+        date={review.date}
+        rating={review.rating}
+        user={review.user}
       />
     </li>
   ));
