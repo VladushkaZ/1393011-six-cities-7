@@ -11,8 +11,7 @@ function Map({offers}) {
     iconAnchor: [15, 30],
   });
   const mapRef = useRef(null);
-  const city = [52.38333, 4.9];
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, offers);
   useEffect(() => {
     if (map) {
       offers.forEach((offer) => {
