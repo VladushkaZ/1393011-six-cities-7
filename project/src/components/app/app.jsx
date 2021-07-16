@@ -11,19 +11,19 @@ import reviewProp from '../review/review-prop';
 import offerProp from '../place-card/offer-prop';
 
 function App(props) {
-  const { numbers, cities, popular, properties, offers, reviews } = props;
+  const { numbers, popular, properties, offers, reviews } = props;
   return (
 
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainScreen numbers={numbers} cities={cities} popular={popular} offers={offers}/>
+          <MainScreen numbers={numbers} popular={popular} offers={offers}/>
         </Route>
         <Route exact path={AppRoute.ROOM}>
           <PropertyCard properties={properties} numbers={numbers} offers={offers} reviews={reviews} onReview={() => {}} />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesCard numbers={numbers} cities={cities} offers={offers}/>
+          <FavoritesCard numbers={numbers} offers={offers}/>
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginPage />
@@ -38,7 +38,6 @@ function App(props) {
 
 App.propTypes = {
   numbers: PropTypes.number.isRequired,
-  cities: PropTypes.array.isRequired,
   popular: PropTypes.array.isRequired,
   properties: PropTypes.array.isRequired,
   offers: PropTypes.arrayOf(

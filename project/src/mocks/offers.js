@@ -46,11 +46,11 @@ export const Offers = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 48.8534100,
+        longitude: 2.3488000,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Paris',
     },
     description:
       'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -65,8 +65,8 @@ export const Offers = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
+      latitude: 48.869553943508,
+      longitude: 2.35309666406198,
       zoom: 8,
     },
     maxAdults: 3,
