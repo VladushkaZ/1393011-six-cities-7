@@ -9,6 +9,8 @@ export const monthNames = ['January', 'February', 'March', 'April', 'May', 'June
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
+export const POPULAR = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
 export const CITY = {
   'Amsterdam': {
     title: 'Amsterdam',

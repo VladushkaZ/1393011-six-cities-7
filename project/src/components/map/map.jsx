@@ -4,9 +4,14 @@ import 'leaflet/dist/leaflet.css';
 import useMap from './useMap';
 import offerProp from '../place-card/offer-prop';
 
-function Map({offers}) {
+function Map({offers, selectedPoint}) {
   const icon = leaflet.icon({
     iconUrl: 'img/pin.svg',
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+  });
+  const iconActive = leaflet.icon({
+    iconUrl: 'img/pin-active.svg',
     iconSize: [30, 30],
     iconAnchor: [15, 30],
   });
@@ -20,7 +25,8 @@ function Map({offers}) {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: icon,
+            icon: (offer.id === selectedPoint)
+              ? iconActive : icon,
           })
           .addTo(map);
       });

@@ -11,7 +11,6 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 
 const Setting = {
   NUMBERS: 3,
-  POPULAR: ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'],
   PROPERTIES: ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'],
 };
 
@@ -23,7 +22,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App properties={Setting.PROPERTIES} numbers={Setting.NUMBERS} cities={CITIES} popular={Setting.POPULAR} offers={Offers} reviews={Reviews}/>
+      <App properties={Setting.PROPERTIES} numbers={Setting.NUMBERS} cities={CITIES} offers={Offers} reviews={Reviews}/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

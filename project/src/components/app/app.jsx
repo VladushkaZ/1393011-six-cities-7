@@ -17,7 +17,7 @@ function App(props) {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainScreen numbers={numbers} popular={popular} offers={offers}/>
+          <MainScreen numbers={numbers} popular={popular}/>
         </Route>
         <Route exact path={AppRoute.ROOM}>
           <PropertyCard properties={properties} numbers={numbers} offers={offers} reviews={reviews} onReview={() => {}} />

@@ -34,11 +34,12 @@ CitiesList.propTypes = {
 
 const mapStateToProps = (state) => ({
   city: state.city,
+  offers: state.offers,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
+  changeCity(city, offers) {
+    dispatch(ActionCreator.changeCity(city, offers));
   },
 });
 
