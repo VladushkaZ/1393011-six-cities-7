@@ -1,30 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PlaceCard from '../place-card/place-card';
 import offerProp from '../place-card/offer-prop';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-function PlaceCards(props) {
+function PlaceCards({ offers, popular, onListItemHover }) {
   const [activeCard, setActiveCard] = useState(false);
-  const { city } = props;
-  return props.offers.map((offer) => (
-    city === offer.city.name ? (
-      <PlaceCard
-        id={offer.id}
-        city={offer.city}
-        previewImage={offer.previewImage}
-        price={offer.price}
-        isFavorite={offer.isFavorite}
-        isPremium={offer.isPremium}
-        rating={offer.rating}
-        title={offer.title}
-        type={offer.type}
-        checked={activeCard[offer.id]}
-        onMouseEnter={setActiveCard}
-      />
-    ) : (
-      ''
-    )
+  const [sortedOffers, setSortedOffers] = useState(offers);
+
+  useEffect(() => {
+    setSortedOffers(offers);
+  }, [offers]);
+
+  useEffect(() => {
+    switch(popular) {
+      case 'Price: low to high': setSortedOffers([...offers].sort((a, b) => a.price - b.price));
+        break;
+      case 'Price: high to low': setSortedOffers([...offers].sort((a, b) => b.price - a.price));
+        break;
+      case 'Top rated first': setSortedOffers([...offers].sort((a, b) => b.rating - a.rating));
+        break;
+      case 'Popular':
+      default: setSortedOffers(offers);
+        break;
+    }
+  }, [popular]);
+
+  return sortedOffers.map((offer) => (
+    <PlaceCard
+      key={offer.id}
+      id={offer.id}
+      city={offer.city}
+      previewImage={offer.previewImage}
+      price={offer.price}
+      isFavorite={offer.isFavorite}
+      isPremium={offer.isPremium}
+      rating={offer.rating}
+      title={offer.title}
+      type={offer.type}
+      checked={activeCard[offer.id]}
+      onMouseEnter={setActiveCard}
+    />
   ));
 }
 
@@ -35,6 +51,8 @@ PlaceCards.propTypes = {
 
 const mapStateToProps = (state) => ({
   city: state.city,
+  offers: state.offers,
+  popular: state.popular,
 });
 
 export { PlaceCards };

@@ -1,9 +1,11 @@
-import {ActionType} from './action';
-import {CITY} from '../const';
+import { ActionType } from './action';
+import { CITY, POPULAR } from '../const';
+import { Offers } from '../mocks/offers';
 
 const initialState = {
-  offerList: [],
   city: CITY.Paris.title,
+  offers: Offers.filter(({ city }) => city.name === CITY.Paris.title),
+  popular: POPULAR[0],
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,17 +13,16 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_CITY:
       return {
         ...state,
-        city: action.payload,
+        ...action.payload,
       };
-    case ActionType.FILL_OFFER_LIST:
+    case ActionType.SORT_POPULAR:
       return {
         ...state,
-        offerList: state.offerList + action.payload,
+        ...action.payload,
       };
     default:
       return state;
   }
 };
 
-
-export {reducer};
+export { reducer };

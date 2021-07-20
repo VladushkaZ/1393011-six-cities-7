@@ -57,7 +57,7 @@ function PlaceCard(offer) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={`${AppRoute.ROOM}=${id}`}>{title}</a>
+          <Link to={`${AppRoute.ROOM}=${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
