@@ -8,10 +8,10 @@ function NearPlaceCards({offers}) {
     <div key={offer.id}>
       <PlaceCard
         id={offer.id}
-        previewImage={offer.previewImage}
+        previewImage={offer.preview_image}
         price={offer.price}
-        isFavorite={offer.isFavorite}
-        isPremium={offer.isPremium}
+        isFavorite={offer.is_favorite}
+        isPremium={offer.is_premium}
         rating={offer.rating}
         title={offer.title}
         type={offer.type}

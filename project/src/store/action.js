@@ -1,9 +1,10 @@
-import { Offers } from '../mocks/offers';
+//import { Offers } from '../mocks/offers';
 
 export const ActionType = {
   CHANGE_CITY: 'offer/changeCity',
   FILL_OFFER_LIST: 'offer/fillOfferList',
   SORT_POPULAR: 'offer/popular',
+  LOAD_OFFERS: 'data/loadOffers',
 };
 
 export const ActionCreator = {
@@ -11,7 +12,6 @@ export const ActionCreator = {
     type: ActionType.CHANGE_CITY,
     payload: {
       city: currentCity,
-      offers: Offers.filter(({ city }) => currentCity === city.name),
     },
   }),
   sortPopular: (pop) => ({
@@ -19,5 +19,9 @@ export const ActionCreator = {
     payload: {
       popular: pop,
     },
+  }),
+  loadOffers: (offers) => ({
+    type: ActionType.LOAD_OFFERS,
+    payload: offers,
   }),
 };

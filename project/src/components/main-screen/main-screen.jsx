@@ -59,7 +59,7 @@ function MainScreen(props) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {city}</b>
+              <b className="places__found">{offers.length} places to stay in {city.title}</b>
               <SortPopular/>
               <div className="cities__places-list places__list tabs__content">
                 <PlaceCards
@@ -68,7 +68,7 @@ function MainScreen(props) {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" ><Map city={city} offers={offers}/></section>
+              <section className="cities__map map" ><Map city={city.title} offers={offers}/></section>
             </div>
           </div>
         </div>

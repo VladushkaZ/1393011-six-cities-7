@@ -2,9 +2,9 @@ import {useEffect, useState} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
-import { CITY} from '../../const';
+//import { CITY} from '../../const';
 
-function useMap(mapRef, city) {
+function useMap(mapRef, [offers], city) {
 
   const [map, setMap] = useState(null);
 
@@ -12,8 +12,8 @@ function useMap(mapRef, city) {
     if (mapRef.current !== null && map === null) {
       const instance = leaflet.map('map', {
         center: {
-          lat: CITY.Paris.lat,
-          lng: CITY.Paris.lng,
+          lat: 48,
+          lng: 2,
         },
         zoom: 12,
         zoomControl: false,
@@ -28,7 +28,7 @@ function useMap(mapRef, city) {
 
       setMap(instance);
     }
-  }, [mapRef, map, city]);
+  }, [mapRef, map]);
 
   return map;
 }

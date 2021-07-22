@@ -7,9 +7,11 @@ import ReviewForm from '../review/add-review';
 import {AppRoute, CITY} from '../../const';
 import {Link} from 'react-router-dom';
 import Map from '../map/map';
+import { connect } from 'react-redux';
 function PropertyCard(props) {
-  const offerId = Number(window.location.pathname.split('=')[1]);
-  const {description, price, maxAdults, isFavorite, host, rating, title, type, bedrooms, isPremium, images, goods} = props.offers[offerId-1];
+  //const offerId = Number(window.location.pathname.split('=')[1]);
+  const {offers} = props;
+  const {description, price, maxAdults, isFavorite, host, rating, title, type, bedrooms, isPremium, images, goods} = offers[13];
   const PlaceProperties = goods.map((good) => (
     <li key={good} className="property__inside-item">
       {good}
@@ -189,4 +191,10 @@ function PropertyCard(props) {
 PropertyCard.propTypes = {
   ...reviewProp,
 };
-export default PropertyCard;
+const mapStateToProps = (state) => ({
+  city: state.city,
+  offers: state.offers,
+});
+
+export { PropertyCard };
+export default connect(mapStateToProps, null)(PropertyCard);
