@@ -31,10 +31,10 @@ function PlaceCards({ offers, popular, onListItemHover }) {
       key={offer.id}
       id={offer.id}
       city={offer.city}
-      previewImage={offer.preview_image}
+      previewImage={offer['preview_image']}
       price={offer.price}
-      isFavorite={offer.is_favorite}
-      isPremium={offer.is_premium}
+      isFavorite={offer['is_favorite']}
+      isPremium={offer['is_premium']}
       rating={offer.rating}
       title={offer.title}
       type={offer.type}
