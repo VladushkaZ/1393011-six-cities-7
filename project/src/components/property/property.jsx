@@ -4,12 +4,35 @@ import PlaceReview from '../review/review';
 import NearPlaceCards from '../place-near/place-near-list';
 import reviewProp from '../review/review-prop';
 import ReviewForm from '../review/add-review';
-import {AppRoute, CITY} from '../../const';
-import {Link} from 'react-router-dom';
+import { AppRoute, CITY } from '../../const';
+import { Link } from 'react-router-dom';
 import Map from '../map/map';
+import { connect } from 'react-redux';
 function PropertyCard(props) {
+  const { offers } = props;
   const offerId = Number(window.location.pathname.split('=')[1]);
-  const {description, price, maxAdults, isFavorite, host, rating, title, type, bedrooms, isPremium, images, goods} = props.offers[offerId-1];
+  const currentId = offers.indexOf(
+    offers.find((offer) => offer.id === offerId),
+  );
+  const adapt = (key) =>
+    key.replace(/_([a-z])/g, (_, m) => m.toUpperCase());
+  const trasnform = (o, replacer) =>
+    Object.fromEntries(Object.entries(o).map(([k, v]) => [replacer(k), v]));
+  const offersNew = trasnform(offers[currentId], adapt);
+  const {
+    description,
+    price,
+    maxAdults,
+    isFavorite,
+    host,
+    rating,
+    title,
+    type,
+    bedrooms,
+    isPremium,
+    images,
+    goods,
+  } = offersNew;
   const PlaceProperties = goods.map((good) => (
     <li key={good} className="property__inside-item">
       {good}
@@ -17,11 +40,7 @@ function PropertyCard(props) {
   ));
   const PlacePicture = images.map((image) => (
     <div key={image} className="property__image-wrapper">
-      <img
-        className="property__image"
-        src={image}
-        alt="Photo studio"
-      />
+      <img className="property__image" src={image} alt="Photo studio" />
     </div>
   ));
   const numReviews = props.reviews.length;
@@ -42,7 +61,7 @@ function PropertyCard(props) {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to = {AppRoute.ROOT}>
+              <Link className="header__logo-link" to={AppRoute.ROOT}>
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -57,7 +76,7 @@ function PropertyCard(props) {
                 <li className="header__nav-item user">
                   <Link
                     className="header__nav-link header__nav-link--profile"
-                    to = {AppRoute.FAVORITES}
+                    to={AppRoute.FAVORITES}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
@@ -66,7 +85,7 @@ function PropertyCard(props) {
                   </Link>
                 </li>
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to = {AppRoute.LOGIN}>
+                  <Link className="header__nav-link" to={AppRoute.LOGIN}>
                     <span className="header__signout">Sign out</span>
                   </Link>
                 </li>
@@ -79,24 +98,21 @@ function PropertyCard(props) {
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <div className="property__gallery">
-              {PlacePicture}
-            </div>
+            <div className="property__gallery">{PlacePicture}</div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {(isPremium)
-              && (
+              {isPremium && (
                 <div className="property__mark">
                   <span>Premium</span>
                 </div>
               )}
               <div className="property__name-wrapper">
-                <h1 className="property__name">
-                  {title}
-                </h1>
+                <h1 className="property__name">{title}</h1>
                 <button
-                  className={`${isFavorite ? 'property__bookmark-button--active' : ''} property__bookmark-button button`}
+                  className={`${
+                    isFavorite ? 'property__bookmark-button--active' : ''
+                  } property__bookmark-button button`}
                   type="button"
                 >
                   <svg
@@ -111,7 +127,7 @@ function PropertyCard(props) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: `${rating*20}%`}}></span>
+                  <span style={{ width: `${rating * 20}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">
@@ -135,14 +151,16 @@ function PropertyCard(props) {
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  {PlaceProperties}
-                </ul>
+                <ul className="property__inside-list">{PlaceProperties}</ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`${host.isPro? 'property__avatar-wrapper--pro' : ''} property__avatar-wrapper user__avatar-wrapper`}>
+                  <div
+                    className={`${
+                      host.isPro ? 'property__avatar-wrapper--pro' : ''
+                    } property__avatar-wrapper user__avatar-wrapper`}
+                  >
                     <img
                       className="property__avatar user__avatar"
                       src={host.avatarUrl}
@@ -152,24 +170,25 @@ function PropertyCard(props) {
                     />
                   </div>
                   <span className="property__user-name">{host.name}</span>
-                  <span className="property__user-status">{host.isPro?'Pro':''}</span>
+                  <span className="property__user-status">
+                    {host.isPro ? 'Pro' : ''}
+                  </span>
                 </div>
-                <div className="property__description">
-                  {description}
-                </div>
+                <div className="property__description">{description}</div>
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
-                  Reviews &middot; <span className="reviews__amount">{numReviews}</span>
+                  Reviews &middot;{' '}
+                  <span className="reviews__amount">{numReviews}</span>
                 </h2>
-                <ul className="reviews__list">
-                  {PlaceReviews}
-                </ul>
-                <ReviewForm/>
+                <ul className="reviews__list">{PlaceReviews}</ul>
+                <ReviewForm />
               </section>
             </div>
           </div>
-          <section className="property__map map"><Map city={CITY} offers={props.offers.slice(0,3)}/></section>
+          <section className="property__map map">
+            <Map city={CITY} offers={props.offers.slice(0, 3)} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -177,7 +196,7 @@ function PropertyCard(props) {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <NearPlaceCards offers={props.offers}/>
+              <NearPlaceCards offers={props.offers} />
             </div>
           </section>
         </div>
@@ -189,4 +208,10 @@ function PropertyCard(props) {
 PropertyCard.propTypes = {
   ...reviewProp,
 };
-export default PropertyCard;
+const mapStateToProps = (state) => ({
+  city: state.city,
+  offers: state.offers,
+});
+
+export { PropertyCard };
+export default connect(mapStateToProps, null)(PropertyCard);

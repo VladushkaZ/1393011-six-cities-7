@@ -1,11 +1,12 @@
 import { ActionType } from './action';
 import { CITY, POPULAR } from '../const';
-import { Offers } from '../mocks/offers';
+//import { Offers } from '../mocks/offers';
 
 const initialState = {
-  city: CITY.Paris.title,
-  offers: Offers.filter(({ city }) => city.name === CITY.Paris.title),
+  city: CITY[0],
+  offers: [],
   popular: POPULAR[0],
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +20,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
+      };
+    case ActionType.LOAD_OFFERS:
+      return {
+        ...state,
+        offers: action.payload,
+        isDataLoaded: true,
       };
     default:
       return state;
