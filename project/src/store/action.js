@@ -5,6 +5,9 @@ export const ActionType = {
   FILL_OFFER_LIST: 'offer/fillOfferList',
   SORT_POPULAR: 'offer/popular',
   LOAD_OFFERS: 'data/loadOffers',
+  REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
+  LOGOUT: 'user/logout',
+  REDIRECT_TO_ROUTE: 'game/redirectToRoute',
 };
 
 export const ActionCreator = {
@@ -23,5 +26,16 @@ export const ActionCreator = {
   loadOffers: (offers) => ({
     type: ActionType.LOAD_OFFERS,
     payload: offers,
+  }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  }),
+  logout: () => ({
+    type: ActionType.LOGOUT,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   }),
 };

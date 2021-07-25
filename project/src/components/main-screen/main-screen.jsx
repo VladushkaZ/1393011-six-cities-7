@@ -2,14 +2,14 @@ import React from 'react';
 import PlaceCards from '../place-card/card-list';
 import SortPopular from '../sort-popular/sort-popular';
 import Map from '../map/map';
-//import PropTypes from 'prop-types';
 import offerProp from '../place-card/offer-prop';
-import {AppRoute} from '../../const';
-import {Link} from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { Link } from 'react-router-dom';
 import CitiesList from '../cities-list/cities-list';
 import { connect } from 'react-redux';
+import { logout } from '../../store/api-actions';
 function MainScreen(props) {
-  const { city, offers} = props;
+  const { city, offers, authorizationStatus, logoutGame } = props;
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -27,24 +27,42 @@ function MainScreen(props) {
               </a>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link
-                    className="header__nav-link header__nav-link--profile"
-                    to={AppRoute.FAVORITES}
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={AppRoute.LOGIN}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
+              {authorizationStatus === AuthorizationStatus.AUTH ? (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <Link
+                      className="header__nav-link header__nav-link--profile"
+                      to={AppRoute.FAVORITES}
+                    >
+                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <span className="header__user-name user__name">
+                        Oliver.conner@gmail.com
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="header__nav-item">
+                    <Link
+                      className="header__nav-link"
+                      to="/"
+                      onClick={(evt) => {
+                        evt.preventDefault();
+
+                        logoutGame();
+                      }}
+                    >
+                      <span className="header__signout">Sign out</span>
+                    </Link>
+                  </li>
+                </ul>
+              ) : (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item">
+                    <Link className="header__nav-link" to={AppRoute.LOGIN}>
+                      <span className="header__signout">Sign in</span>
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </nav>
           </div>
         </div>
@@ -59,16 +77,18 @@ function MainScreen(props) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {city.title}</b>
-              <SortPopular/>
+              <b className="places__found">
+                {offers.length} places to stay in {city.title}
+              </b>
+              <SortPopular />
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCards
-                  offers={props.offers}
-                />
+                <PlaceCards offers={props.offers} />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" ><Map city={city.title} offers={offers}/></section>
+              <section className="cities__map map">
+                <Map city={city.title} offers={offers} />
+              </section>
             </div>
           </div>
         </div>
@@ -84,7 +104,14 @@ MainScreen.propTypes = {
 const mapStateToProps = (state) => ({
   city: state.city,
   offers: state.offers,
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logoutGame() {
+    dispatch(logout());
+  },
 });
 
 export { MainScreen };
-export default connect(mapStateToProps, null)(MainScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

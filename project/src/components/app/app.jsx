@@ -4,13 +4,15 @@ import FavoritesCard from '../favorites/favorites';
 import LoginPage from '../login/login';
 import PropertyCard from '../property/property';
 import ErrorPage from '../notfound/notfound';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AppRoute, isCheckedAuth } from '../../const';
 import reviewProp from '../review/review-prop';
 import offerProp from '../place-card/offer-prop';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {connect} from 'react-redux';
+import PrivateRoute from '../private-rout/private-rout';
+import browserHistory from '../../browser-history';
 
 function App(props) {
   const { numbers, popular, properties, offers, reviews, authorizationStatus, isDataLoaded } = props;
@@ -21,7 +23,7 @@ function App(props) {
   }
   return (
 
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
           <MainScreen numbers={numbers} popular={popular}/>
@@ -29,9 +31,9 @@ function App(props) {
         <Route exact path={AppRoute.ROOM}>
           <PropertyCard properties={properties} numbers={numbers} offers={offers} reviews={reviews} onReview={() => {}} />
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesCard numbers={numbers} offers={offers}/>
-        </Route>
+        <PrivateRoute exact path={AppRoute.FAVORITES}
+          render={({history}) =><FavoritesCard numbers={numbers} offers={offers} onReplayButtonClick={() => history.push(AppRoute.GAME)}/>}
+        />
         <Route exact path={AppRoute.LOGIN}>
           <LoginPage />
         </Route>
