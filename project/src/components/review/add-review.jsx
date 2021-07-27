@@ -1,5 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import ReviewRating from '../review/review-rating';
+import PropTypes from 'prop-types';
+import { createComment } from '../../store/api-actions';
+import { connect } from 'react-redux';
 
 const RatingTitle = {
   1: 'terribly',
@@ -9,23 +12,32 @@ const RatingTitle = {
   5: 'perfect',
 };
 
-function ReviewForm() {
-  const [form, setForm] = useState({ratingValue:null, comment:''});
-  return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={(evt) =>
-    {evt.preventDefault();
+function ReviewForm({ onSubmit, id }) {
 
-    }}
-    >
+  const commentRef = useRef();
+  const ratingRef = useRef();
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onSubmit({
+      id,
+      comment: commentRef.current.value,
+      rating: 5,
+    });
+  };
+
+  const [form, setForm] = useState({id:id, ratingValue:null, comment:''});
+  return (
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
+      <div className="reviews__rating-form form__rating" ref={ratingRef}>
         {
           Object.keys(RatingTitle).sort((a,b) => b - a).map((value) => (
             <ReviewRating
               key={value}
+              id={value}
               value={value}
               title={RatingTitle[value]}
-              onChangeHandler={(target) => setForm({
+              onClick={(target) => setForm({
                 ...form,
                 ratingValue: target.value,
               })}
@@ -41,6 +53,7 @@ function ReviewForm() {
             ...form,
             comment: target.value,
           })}
+        ref={commentRef}
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
@@ -55,5 +68,21 @@ function ReviewForm() {
   );
 
 }
+ReviewForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+};
 
-export default ReviewForm;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit({ id, comment, rating }) {
+    dispatch(createComment(
+      {
+        id,
+        comment,
+        rating,
+      }));
+  },
+});
+
+export {ReviewForm};
+export default connect(null, mapDispatchToProps)(ReviewForm);

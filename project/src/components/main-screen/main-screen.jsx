@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PlaceCards from '../place-card/card-list';
 import SortPopular from '../sort-popular/sort-popular';
 import Map from '../map/map';
@@ -9,7 +9,14 @@ import CitiesList from '../cities-list/cities-list';
 import { connect } from 'react-redux';
 import { logout } from '../../store/api-actions';
 function MainScreen(props) {
-  const { city, offers, authorizationStatus, logoutGame } = props;
+  const { city, offers, authorizationStatus, logoutApp } = props;
+  const [selectedPoint, setSelectedPoint] = useState({});
+  const onListItemHover = (offerID) => {
+    const currentPoint = offers.find(({ id }) =>
+      Number(id) === Number(offerID),
+    );
+    setSelectedPoint(currentPoint);
+  };
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -47,7 +54,7 @@ function MainScreen(props) {
                       onClick={(evt) => {
                         evt.preventDefault();
 
-                        logoutGame();
+                        logoutApp();
                       }}
                     >
                       <span className="header__signout">Sign out</span>
@@ -82,12 +89,12 @@ function MainScreen(props) {
               </b>
               <SortPopular />
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCards offers={props.offers} />
+                <PlaceCards offers={props.offers} onListItemHover={onListItemHover}/>
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city.title} offers={offers} />
+                <Map city={city.title} offers={offers} selectedPoint={selectedPoint}/>
               </section>
             </div>
           </div>
@@ -108,7 +115,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logoutGame() {
+  logoutApp() {
     dispatch(logout());
   },
 });

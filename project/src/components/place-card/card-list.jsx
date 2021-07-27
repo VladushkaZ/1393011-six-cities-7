@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 function PlaceCards({ offers, popular, onListItemHover }) {
-  const [activeCard, setActiveCard] = useState(false);
   const [sortedOffers, setSortedOffers] = useState(offers);
 
   useEffect(() => {
@@ -38,8 +37,7 @@ function PlaceCards({ offers, popular, onListItemHover }) {
       rating={offer.rating}
       title={offer.title}
       type={offer.type}
-      checked={activeCard[offer.id]}
-      onMouseEnter={setActiveCard}
+      onListItemHover={onListItemHover}
     />
   ));
 }

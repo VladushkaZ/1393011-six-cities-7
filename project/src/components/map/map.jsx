@@ -21,18 +21,20 @@ function Map({offers, selectedPoint}) {
     if (map) {
       map.setView(new leaflet.LatLng(offers[0].city.location.latitude, offers[0].city.location.longitude), offers[0].city.location.zoom);
       offers.forEach((offer) => {
+        /* eslint no-console: "warn" */
+        console.log(selectedPoint);
         leaflet
           .marker({
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: (offer.id === selectedPoint)
+            icon: (offer.id === selectedPoint.id)
               ? iconActive : icon,
           })
           .addTo(map);
       });
     }
-  }, [map, offers]);
+  }, [map, offers, selectedPoint]);
   return <div id="map" style={{ height: '100%' }} ref={mapRef}></div>;
 }
 Map.propTypes = {

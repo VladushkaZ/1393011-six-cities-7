@@ -58,6 +58,7 @@ export const AuthorizationStatus = {
 
 export const APIRoute = {
   OFFERS: '/Hotels',
+  REVIEW: '/Comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
 };

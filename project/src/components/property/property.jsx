@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 //import PropTypes from 'prop-types';
 import PlaceReview from '../review/review';
 import NearPlaceCards from '../place-near/place-near-list';
 import reviewProp from '../review/review-prop';
 import ReviewForm from '../review/add-review';
-import { AppRoute, CITY } from '../../const';
-import { Link } from 'react-router-dom';
+import { AppRoute, CITY, AuthorizationStatus } from '../../const';
+import { Link, withRouter } from 'react-router-dom';
 import Map from '../map/map';
 import { connect } from 'react-redux';
+import { getOfferByID, getReviewByID, getNearbyByID } from '../../store/api-actions';
+import ErrorPage from '../notfound/notfound';
+import { logout } from '../../store/api-actions';
 function PropertyCard(props) {
-  const { offers } = props;
-  const offerId = Number(window.location.pathname.split('=')[1]);
-  const currentId = offers.indexOf(
-    offers.find((offer) => offer.id === offerId),
-  );
+  const { getByID, match: { params: { id: offerID } }, offer, offers, reviews, nearby, authorizationStatus, logoutApp} = props;
+  const [selectedPoint, setSelectedPoint] = useState({});
+  const onListItemHover = (offersID) => {
+    const currentPoint = offers.find(({ id }) =>
+      Number(id) === Number(offersID),
+    );
+    setSelectedPoint(currentPoint);
+  };
+  useEffect(() => {
+    getByID(offerID);
+  }, [offerID]);
+  if (!offer) {
+    return <ErrorPage/>;
+  }
+
   const adapt = (key) =>
     key.replace(/_([a-z])/g, (_, m) => m.toUpperCase());
   const trasnform = (o, replacer) =>
     Object.fromEntries(Object.entries(o).map(([k, v]) => [replacer(k), v]));
-  const offersNew = trasnform(offers[currentId], adapt);
+  const offersNew = trasnform(offer, adapt);
   const {
     description,
     price,
@@ -43,8 +56,8 @@ function PropertyCard(props) {
       <img className="property__image" src={image} alt="Photo studio" />
     </div>
   ));
-  const numReviews = props.reviews.length;
-  const PlaceReviews = props.reviews.map((review) => (
+  const numReviews = reviews.length;
+  const PlaceReviews = reviews.map((review) => (
     <li key={review.id}>
       <PlaceReview
         id={review.id}
@@ -72,24 +85,42 @@ function PropertyCard(props) {
               </Link>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link
-                    className="header__nav-link header__nav-link--profile"
-                    to={AppRoute.FAVORITES}
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={AppRoute.LOGIN}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
+              {authorizationStatus === AuthorizationStatus.AUTH ? (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <Link
+                      className="header__nav-link header__nav-link--profile"
+                      to={AppRoute.FAVORITES}
+                    >
+                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <span className="header__user-name user__name">
+                        Oliver.conner@gmail.com
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="header__nav-item">
+                    <Link
+                      className="header__nav-link"
+                      to="/"
+                      onClick={(evt) => {
+                        evt.preventDefault();
+
+                        logoutApp();
+                      }}
+                    >
+                      <span className="header__signout">Sign out</span>
+                    </Link>
+                  </li>
+                </ul>
+              ) : (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item">
+                    <Link className="header__nav-link" to={AppRoute.LOGIN}>
+                      <span className="header__signout">Sign in</span>
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </nav>
           </div>
         </div>
@@ -158,12 +189,12 @@ function PropertyCard(props) {
                 <div className="property__host-user user">
                   <div
                     className={`${
-                      host.isPro ? 'property__avatar-wrapper--pro' : ''
+                      host['is_pro'] ? 'property__avatar-wrapper--pro' : ''
                     } property__avatar-wrapper user__avatar-wrapper`}
                   >
                     <img
                       className="property__avatar user__avatar"
-                      src={host.avatarUrl}
+                      src={host['avatar_url']}
                       width="74"
                       height="74"
                       alt="Host avatar"
@@ -171,7 +202,7 @@ function PropertyCard(props) {
                   </div>
                   <span className="property__user-name">{host.name}</span>
                   <span className="property__user-status">
-                    {host.isPro ? 'Pro' : ''}
+                    {host['is_pro'] ? 'Pro' : ''}
                   </span>
                 </div>
                 <div className="property__description">{description}</div>
@@ -182,12 +213,15 @@ function PropertyCard(props) {
                   <span className="reviews__amount">{numReviews}</span>
                 </h2>
                 <ul className="reviews__list">{PlaceReviews}</ul>
-                <ReviewForm />
+                {
+                  authorizationStatus === AuthorizationStatus.AUTH?
+                    <ReviewForm id={offerID}/>: ''
+                }
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map city={CITY} offers={props.offers.slice(0, 3)} />
+            <Map city={CITY} offers={nearby} selectedPoint={selectedPoint}/>
           </section>
         </section>
         <div className="container">
@@ -196,7 +230,7 @@ function PropertyCard(props) {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <NearPlaceCards offers={props.offers} />
+              <NearPlaceCards offers={nearby} onListItemHover={onListItemHover}/>
             </div>
           </section>
         </div>
@@ -211,7 +245,22 @@ PropertyCard.propTypes = {
 const mapStateToProps = (state) => ({
   city: state.city,
   offers: state.offers,
+  offer: state.offer,
+  reviews: state.reviews,
+  nearby: state.nearby,
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getByID(id) {
+    dispatch(getOfferByID(id));
+    dispatch(getReviewByID(id));
+    dispatch(getNearbyByID(id));
+  },
+  logoutApp() {
+    dispatch(logout());
+  },
 });
 
 export { PropertyCard };
-export default connect(mapStateToProps, null)(PropertyCard);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PropertyCard));
