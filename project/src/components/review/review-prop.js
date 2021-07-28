@@ -11,4 +11,4 @@ export default PropTypes.shape({
     isPro: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-});
+}).isRequired;

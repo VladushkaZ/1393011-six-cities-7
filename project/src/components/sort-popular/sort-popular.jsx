@@ -3,7 +3,6 @@ import { POPULAR } from '../../const';
 import { ActionCreator } from '../../store/action';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-//import offerProp from '../place-card/offer-prop';
 
 function SortPopular(props) {
   const { popular, sortPopular } = props;
@@ -22,18 +21,15 @@ function SortPopular(props) {
         </svg>
       </span>
       <ul className="places__options places__options--custom places__options--opened">
-        <li className="places__option" tabIndex="0">
-          {Sort}
-        </li>
+        {Sort}
       </ul>
     </form>
   );
 }
 
 SortPopular.propTypes = {
-//  ...offerProp,
-  popular: PropTypes.array.isRequired,
-  sortPopular: PropTypes.array.isRequired,
+  popular: PropTypes.string.isRequired,
+  sortPopular: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

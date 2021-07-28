@@ -1,4 +1,3 @@
-//import { Offers } from '../mocks/offers';
 
 export const ActionType = {
   CHANGE_CITY: 'offer/changeCity',
@@ -12,6 +11,7 @@ export const ActionType = {
   LOGOUT: 'user/logout',
   CREATE_COMMENT: 'user/createComment',
   REDIRECT_TO_ROUTE: 'offer/redirectToRoute',
+  LOAD_USER_DATA: 'user/login',
 };
 
 export const ActionCreator = {
@@ -39,9 +39,13 @@ export const ActionCreator = {
     type: ActionType.LOAD_REVIEW,
     payload: reviews,
   }),
-  loadNearby: (nearby) => ({
+  loadUserData: (userData) => ({
+    type: ActionType.LOAD_USER_DATA,
+    payload: userData,
+  }),
+  loadNearby: (nearPlases) => ({
     type: ActionType.LOAD_NEARBY,
-    payload: nearby,
+    payload: nearPlases,
   }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,

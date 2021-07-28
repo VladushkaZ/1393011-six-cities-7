@@ -34,7 +34,7 @@ function CitiesList(props) {
 }
 
 CitiesList.propTypes = {
-  city: PropTypes.array.isRequired,
+  city: PropTypes.object.isRequired,
   changeCity: PropTypes.func.isRequired,
   fetchOffers: PropTypes.func.isRequired,
 };

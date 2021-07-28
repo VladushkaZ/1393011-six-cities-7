@@ -7,10 +7,11 @@ const initialState = {
   offers: [],
   offer: null,
   reviews: [],
-  nearby: [],
+  nearPlases: [],
   popular: POPULAR[0],
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  userData: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -54,7 +55,12 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_NEARBY:
       return {
         ...state,
-        nearby: action.payload,
+        nearPlases: action.payload,
+      };
+    case ActionType.LOAD_USER_DATA:
+      return {
+        ...state,
+        userData: action.payload,
       };
     case ActionType.CREATE_COMMENT:
       return {

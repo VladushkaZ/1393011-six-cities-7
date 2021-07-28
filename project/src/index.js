@@ -5,8 +5,6 @@ import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {createAPI} from './services/api';
 import {Provider} from 'react-redux';
-//import {Reviews} from './mocks/review';
-//import {Offers} from './mocks/offers';
 import {CITIES} from './const';
 import {reducer} from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';

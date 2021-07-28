@@ -12,10 +12,11 @@ import offerProp from '../place-card/offer-prop';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {connect} from 'react-redux';
 import PrivateRoute from '../private-rout/private-rout';
+import PrivateLogin from '../private-rout/private-login';
 import browserHistory from '../../browser-history';
 
 function App(props) {
-  const { numbers, popular, properties, offers, reviews, authorizationStatus, isDataLoaded } = props;
+  const { properties, offers, reviews, authorizationStatus, isDataLoaded } = props;
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
@@ -26,17 +27,17 @@ function App(props) {
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainScreen numbers={numbers} popular={popular}/>
+          <MainScreen/>
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <PropertyCard properties={properties} numbers={numbers} offers={offers} reviews={reviews} onReview={() => {}} />
+          <PropertyCard properties={properties} offers={offers} reviews={reviews} onReview={() => {}} />
         </Route>
         <PrivateRoute exact path={AppRoute.FAVORITES}
-          render={({history}) =><FavoritesCard numbers={numbers} offers={offers} onReplayButtonClick={() => history.push(AppRoute.GAME)}/>}
+          render={({history}) =><FavoritesCard offers={offers} onReplayButtonClick={() => history.push(AppRoute.LOGIN)}/>}
         />
-        <Route exact path={AppRoute.LOGIN}>
-          <LoginPage />
-        </Route>
+        <PrivateLogin exact path={AppRoute.LOGIN}
+          render={({history}) => <LoginPage  onReplayButtonClick={() => history.push(AppRoute.ROOT)}/>}
+        />
         <Route>
           <ErrorPage />
         </Route>
@@ -46,8 +47,6 @@ function App(props) {
 }
 
 App.propTypes = {
-  numbers: PropTypes.number.isRequired,
-  popular: PropTypes.array.isRequired,
   properties: PropTypes.array.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,

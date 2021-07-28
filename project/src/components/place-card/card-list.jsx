@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PlaceCard from '../place-card/place-card';
-import offerProp from '../place-card/offer-prop';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 function PlaceCards({ offers, popular, onListItemHover }) {
@@ -41,11 +39,6 @@ function PlaceCards({ offers, popular, onListItemHover }) {
     />
   ));
 }
-
-PlaceCards.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.oneOfType([offerProp]).isRequired)
-    .isRequired,
-};
 
 const mapStateToProps = (state) => ({
   city: state.city,
