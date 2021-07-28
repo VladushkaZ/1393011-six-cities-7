@@ -15,13 +15,16 @@ function PlaceReview(review) {
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
           <img
             className="reviews__avatar user__avatar"
-            src={user.avatarUrl}
+            src={user['avatar_url']}
             width="54"
             height="54"
             alt="Reviews avatar"
           />
         </div>
         <span className="reviews__user-name">{user.name}</span>
+        <span className="property__user-status">
+          {user['is_pro'] ? 'Pro' : ''}
+        </span>
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">

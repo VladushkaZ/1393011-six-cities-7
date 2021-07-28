@@ -3,18 +3,19 @@ import PlaceCard from '../place-card/place-card';
 import offerProp from '../place-card/offer-prop';
 import PropTypes from 'prop-types';
 
-function NearPlaceCards({offers}) {
-  return offers.slice(0,3).map((offer) => (
-    <div key={offer.id}>
+function NearPlaceCards({offers, onListItemHover}) {
+  return offers.map((near) => (
+    <div key={offers.id}>
       <PlaceCard
-        id={offer.id}
-        previewImage={offer['preview_image']}
-        price={offer.price}
-        isFavorite={offer['is_favorite']}
-        isPremium={offer['is_premium']}
-        rating={offer.rating}
-        title={offer.title}
-        type={offer.type}
+        id={near.id}
+        previewImage={near['preview_image']}
+        price={near.price}
+        isFavorite={near['is_favorite']}
+        isPremium={near['is_premium']}
+        rating={near.rating}
+        title={near.title}
+        type={near.type}
+        onListItemHover={onListItemHover}
       />
     </div>
   ));

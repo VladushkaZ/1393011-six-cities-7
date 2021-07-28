@@ -5,6 +5,9 @@ import {AuthorizationStatus} from '../const';
 const initialState = {
   city: CITY[0],
   offers: [],
+  offer: null,
+  reviews: [],
+  nearby: [],
   popular: POPULAR[0],
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
@@ -37,6 +40,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+      };
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        offer: action.payload,
+      };
+    case ActionType.LOAD_REVIEW:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    case ActionType.LOAD_NEARBY:
+      return {
+        ...state,
+        nearby: action.payload,
+      };
+    case ActionType.CREATE_COMMENT:
+      return {
+        ...state,
+        comment: action.payload,
       };
     default:
       return state;

@@ -1,8 +1,7 @@
 import React from 'react';
 import offerProp from './offer-prop';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-function PlaceCard(offer) {
+function PlaceCard(props) {
   const {
     id,
     previewImage,
@@ -12,9 +11,13 @@ function PlaceCard(offer) {
     rating,
     title,
     type,
-  } = offer;
+    onListItemHover,
+  } = props;
+  const listItemHoverHandler = (evt) => {
+    onListItemHover(evt.currentTarget.id);
+  };
   return (
-    <article className="cities__place-card place-card">
+    <article id={id} className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
       {(isPremium)
       && (
         <div className="place-card__mark">
@@ -22,7 +25,7 @@ function PlaceCard(offer) {
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.ROOM}=${id}`}>
+        <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -57,7 +60,7 @@ function PlaceCard(offer) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={`${AppRoute.ROOM}=${id}`}>{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

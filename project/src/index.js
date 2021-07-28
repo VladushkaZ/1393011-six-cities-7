@@ -5,7 +5,7 @@ import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {createAPI} from './services/api';
 import {Provider} from 'react-redux';
-import {Reviews} from './mocks/review';
+//import {Reviews} from './mocks/review';
 //import {Offers} from './mocks/offers';
 import {CITIES} from './const';
 import {reducer} from './store/reducer';
@@ -38,7 +38,7 @@ store.dispatch(fetchOffersList());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App properties={Setting.PROPERTIES} cities={CITIES} reviews={Reviews}/>
+      <App properties={Setting.PROPERTIES} cities={CITIES}/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

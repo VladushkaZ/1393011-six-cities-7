@@ -4,10 +4,14 @@ export const ActionType = {
   CHANGE_CITY: 'offer/changeCity',
   FILL_OFFER_LIST: 'offer/fillOfferList',
   SORT_POPULAR: 'offer/popular',
+  LOAD_OFFER: 'data/loadOffer',
+  LOAD_REVIEW: 'data/loadReview',
   LOAD_OFFERS: 'data/loadOffers',
+  LOAD_NEARBY: 'data/loadNearby',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
-  REDIRECT_TO_ROUTE: 'game/redirectToRoute',
+  CREATE_COMMENT: 'user/createComment',
+  REDIRECT_TO_ROUTE: 'offer/redirectToRoute',
 };
 
 export const ActionCreator = {
@@ -26,6 +30,18 @@ export const ActionCreator = {
   loadOffers: (offers) => ({
     type: ActionType.LOAD_OFFERS,
     payload: offers,
+  }),
+  loadOffer: (offer) => ({
+    type: ActionType.LOAD_OFFER,
+    payload: offer,
+  }),
+  loadReview: (reviews) => ({
+    type: ActionType.LOAD_REVIEW,
+    payload: reviews,
+  }),
+  loadNearby: (nearby) => ({
+    type: ActionType.LOAD_NEARBY,
+    payload: nearby,
   }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
