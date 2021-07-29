@@ -10,8 +10,11 @@ import { connect } from 'react-redux';
 import { getOfferByID, getReviewByID, getNearbyByID } from '../../store/api-actions';
 import ErrorPage from '../notfound/notfound';
 import Header from '../header/header';
-function PropertyCard(props) {
-  const { getByID, match: { params: { id: offerID } }, offer, offers, reviews, nearPlases, authorizationStatus} = props;
+import { getCity, getOffers } from '../../store/offers/selector';
+import { getNearPlases, getOffer, getReviews } from '../../store/offer/selector';
+import { getAuthorizationStatus } from '../../store/user/selector';
+
+function PropertyCard({ getByID, match: { params: { id: offerID } }, offer, offers, reviews, nearPlases, authorizationStatus}) {
   const [selectedPoint, setSelectedPoint] = useState({});
   const onListItemHover = (offersID) => {
     const currentPoint = offers.find(({ id }) =>
@@ -56,7 +59,7 @@ function PropertyCard(props) {
     </div>
   ));
   const numReviews = reviews.length;
-  const PlaceReviews = reviews.sort((a, b) => b.id - a.id).map((review) => (
+  const PlaceReviews = reviews.map((review) => (
     <li key={review.id}>
       <PlaceReview
         id={review.id}
@@ -188,12 +191,12 @@ PropertyCard.propTypes = {
   ...reviewProp,
 };
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers,
-  offer: state.offer,
-  reviews: state.reviews,
-  nearPlases: state.nearPlases,
-  authorizationStatus: state.authorizationStatus,
+  city: getCity(state),
+  offers: getOffers(state),
+  offer: getOffer(state),
+  reviews: getReviews(state),
+  nearPlases: getNearPlases(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

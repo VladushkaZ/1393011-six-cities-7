@@ -14,6 +14,8 @@ import {connect} from 'react-redux';
 import PrivateRoute from '../private-rout/private-rout';
 import PrivateLogin from '../private-rout/private-login';
 import browserHistory from '../../browser-history';
+import { getAuthorizationStatus } from '../../store/user/selector';
+import { getDataLoaded } from '../../store/offers/selector';
 
 function App(props) {
   const { properties, offers, reviews, authorizationStatus, isDataLoaded } = props;
@@ -59,8 +61,8 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
+  authorizationStatus: getAuthorizationStatus(state),
+  isDataLoaded: getDataLoaded(state),
 });
 
 export {App};

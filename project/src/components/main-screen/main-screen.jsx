@@ -6,8 +6,9 @@ import offerProp from '../place-card/offer-prop';
 import CitiesList from '../cities-list/cities-list';
 import { connect } from 'react-redux';
 import Header from '../header/header';
+import { getCity, getOffers } from '../../store/offers/selector';
 function MainScreen(props) {
-  const { city, offers} = props;
+  const { city, offers } = props;
   const [selectedPoint, setSelectedPoint] = useState({});
   const onListItemHover = (offerID) => {
     const currentPoint = offers.find(({ id }) =>
@@ -32,7 +33,7 @@ function MainScreen(props) {
               </b>
               <SortPopular />
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCards offers={props.offers} onListItemHover={onListItemHover}/>
+                <PlaceCards offers={offers} onListItemHover={onListItemHover}/>
               </div>
             </section>
             <div className="cities__right-section">
@@ -52,8 +53,8 @@ MainScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers,
+  city: getCity(state),
+  offers: getOffers(state),
 });
 
 export { MainScreen };

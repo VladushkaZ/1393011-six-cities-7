@@ -1,61 +1,68 @@
+import { createAction } from '@reduxjs/toolkit';
 
 export const ActionType = {
-  CHANGE_CITY: 'offer/changeCity',
-  FILL_OFFER_LIST: 'offer/fillOfferList',
-  SORT_POPULAR: 'offer/popular',
-  LOAD_OFFER: 'data/loadOffer',
-  LOAD_REVIEW: 'data/loadReview',
-  LOAD_OFFERS: 'data/loadOffers',
-  LOAD_NEARBY: 'data/loadNearby',
+  CHANGE_CITY: 'offers/changeCity',
+  SORT_POPULAR: 'offers/popular',
+  LOAD_OFFER: 'offer/loadOffer',
+  LOAD_REVIEW: 'offer/loadReview',
+  LOAD_OFFERS: 'offers/loadOffers',
+  LOAD_NEARBY: 'offer/loadNearby',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
-  CREATE_COMMENT: 'user/createComment',
-  REDIRECT_TO_ROUTE: 'offer/redirectToRoute',
+  REDIRECT_TO_ROUTE: 'user/redirectToRoute',
   LOAD_USER_DATA: 'user/login',
 };
 
-export const ActionCreator = {
-  changeCity: (currentCity) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: {
-      city: currentCity,
-    },
-  }),
-  sortPopular: (pop) => ({
-    type: ActionType.SORT_POPULAR,
-    payload: {
-      popular: pop,
-    },
-  }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
+export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
+  payload: city,
+}));
+
+export const sortPopular = createAction(ActionType.SORT_POPULAR, (popular) => ({
+  payload: popular,
+}));
+
+export const loadOffers = createAction(
+  ActionType.LOAD_OFFERS,
+  (offers) => ({
     payload: offers,
+    isDataLouded:true,
   }),
-  loadOffer: (offer) => ({
-    type: ActionType.LOAD_OFFER,
-    payload: offer,
-  }),
-  loadReview: (reviews) => ({
-    type: ActionType.LOAD_REVIEW,
-    payload: reviews,
-  }),
-  loadUserData: (userData) => ({
-    type: ActionType.LOAD_USER_DATA,
+);
+
+export const loadOffer = createAction(ActionType.LOAD_OFFER, (offer) => ({
+  payload: offer,
+}));
+
+export const loadReview = createAction(ActionType.LOAD_REVIEW, (reviews) => ({
+  payload: reviews,
+}));
+
+export const loadUserData = createAction(
+  ActionType.LOAD_USER_DATA,
+  (userData) => ({
     payload: userData,
   }),
-  loadNearby: (nearPlases) => ({
-    type: ActionType.LOAD_NEARBY,
+);
+
+export const loadNearby = createAction(
+  ActionType.LOAD_NEARBY,
+  (nearPlases) => ({
     payload: nearPlases,
   }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
+);
+
+export const requireAuthorization = createAction(
+  ActionType.REQUIRED_AUTHORIZATION,
+  (status) => ({
     payload: status,
   }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
+);
+
+export const logout = createAction(ActionType.LOGOUT);
+
+export const redirectToRoute = createAction(
+  ActionType.REDIRECT_TO_ROUTE,
+  (url) => ({
     payload: url,
   }),
-};
+);

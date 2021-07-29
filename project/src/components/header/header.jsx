@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../store/api-actions';
 import PropTypes from 'prop-types';
+import { getAuthorizationStatus, getUserData } from '../../store/user/selector';
 
 function Header(props) {
   const { authorizationStatus, logoutApp, userData } = props;
@@ -77,8 +78,8 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  userData: state.userData,
+  authorizationStatus: getAuthorizationStatus(state),
+  userData: getUserData(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

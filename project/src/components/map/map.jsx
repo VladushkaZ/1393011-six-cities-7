@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from './useMap';
 import offerProp from '../place-card/offer-prop';
 import { connect } from 'react-redux';
+import { getCity, getOffers } from '../../store/offers/selector';
 function Map({offers, selectedPoint}) {
   const icon = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -40,8 +41,8 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers,
+  city: getCity(state),
+  offers: getOffers(state),
 });
 
 export { Map };

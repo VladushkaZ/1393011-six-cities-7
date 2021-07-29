@@ -1,18 +1,17 @@
 import React from 'react';
 import offerProp from './offer-prop';
 import {Link} from 'react-router-dom';
-function PlaceCard(props) {
-  const {
-    id,
-    previewImage,
-    price,
-    isFavorite,
-    isPremium,
-    rating,
-    title,
-    type,
-    onListItemHover,
-  } = props;
+function PlaceCard({
+  id,
+  previewImage,
+  price,
+  isFavorite,
+  isPremium,
+  rating,
+  title,
+  type,
+  onListItemHover,
+}) {
   const listItemHoverHandler = (evt) => {
     onListItemHover(evt.currentTarget.id);
   };

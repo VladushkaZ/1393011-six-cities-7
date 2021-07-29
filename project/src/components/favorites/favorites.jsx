@@ -5,6 +5,8 @@ import offerProp from '../place-card/offer-prop';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../header/header';
+import { getCity, getOffers } from '../../store/offers/selector';
+import { getAuthorizationStatus } from '../../store/user/selector';
 function FavoritesCard(props) {
   const {offers} = props;
   const FavoriteCards = offers.map((offer) =>
@@ -65,9 +67,9 @@ FavoritesCard.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers,
-  authorizationStatus: state.authorizationStatus,
+  city: getCity(state),
+  offers: getOffers(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export { FavoritesCard };

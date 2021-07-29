@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PlaceCard from '../place-card/place-card';
 import { connect } from 'react-redux';
+import { getCity, getOffers, getPopular } from '../../store/offers/selector';
 
 function PlaceCards({ offers, popular, onListItemHover }) {
   const [sortedOffers, setSortedOffers] = useState(offers);
@@ -41,9 +42,9 @@ function PlaceCards({ offers, popular, onListItemHover }) {
 }
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers,
-  popular: state.popular,
+  city: getCity(state),
+  offers:getOffers(state),
+  popular: getPopular(state),
 });
 
 export { PlaceCards };

@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActionCreator } from '../../store/action';
+import { changeCity } from '../../store/action';
 import { CITY } from '../../const';
 import { fetchOffersList } from '../../store/api-actions';
+import { getCity } from '../../store/offers/selector';
+import { getOffers } from '../../store/offers/selector';
 
 function CitiesList(props) {
-  const { city, changeCity, fetchOffers } = props;
+  const { city, onChangeCity, fetchOffers } = props;
 
   useEffect(() => {
     fetchOffers();
@@ -15,7 +17,7 @@ function CitiesList(props) {
   const LocationCities = CITY.map((newCity) => (
     <li key={newCity.title} className="locations__item">
       <a
-        onClick={() => changeCity(newCity)}
+        onClick={() => onChangeCity(newCity)}
         className={
           city.title === newCity.title
             ? 'locations__item-link tabs__item tabs__item--active'
@@ -35,18 +37,18 @@ function CitiesList(props) {
 
 CitiesList.propTypes = {
   city: PropTypes.object.isRequired,
-  changeCity: PropTypes.func.isRequired,
+  onChangeCity: PropTypes.func.isRequired,
   fetchOffers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers,
+  city: getCity(state),
+  offers: getOffers(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(city, offers) {
-    dispatch(ActionCreator.changeCity(city, offers));
+  onChangeCity(city, offers) {
+    dispatch(changeCity(city, offers));
   },
   fetchOffers: () => dispatch(fetchOffersList()),
 });
