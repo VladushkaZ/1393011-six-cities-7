@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 function NearPlaceCards({offers, onListItemHover}) {
   return offers.map((near) => (
-    <div key={offers.id}>
+    <div key={near.id}>
       <PlaceCard
         id={near.id}
         previewImage={near['preview_image']}
@@ -23,8 +23,7 @@ function NearPlaceCards({offers, onListItemHover}) {
 
 PlaceCard.propTypes = {
   offers: PropTypes.arrayOf(
-    PropTypes.oneOfType([offerProp]).isRequired,
-  ).isRequired,
+    PropTypes.oneOfType([offerProp]).isRequired),
 };
 
 export default NearPlaceCards;

@@ -1,14 +1,14 @@
 import React from 'react';
 import { POPULAR } from '../../const';
-import { ActionCreator } from '../../store/action';
+import { sortPopular } from '../../store/action';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-//import offerProp from '../place-card/offer-prop';
+import { getPopular } from '../../store/offers/selector';
 
 function SortPopular(props) {
-  const { popular, sortPopular } = props;
+  const { popular, onSortPopular } = props;
   const Sort = POPULAR.map((pop) => (
-    <li onClick={() => sortPopular(pop)} key={pop} className="places__option" tabIndex="0">
+    <li onClick={() => onSortPopular(pop)} key={pop} className="places__option" tabIndex="0">
       {pop}
     </li>
   ));
@@ -22,27 +22,24 @@ function SortPopular(props) {
         </svg>
       </span>
       <ul className="places__options places__options--custom places__options--opened">
-        <li className="places__option" tabIndex="0">
-          {Sort}
-        </li>
+        {Sort}
       </ul>
     </form>
   );
 }
 
 SortPopular.propTypes = {
-//  ...offerProp,
-  popular: PropTypes.array.isRequired,
-  sortPopular: PropTypes.array.isRequired,
+  popular: PropTypes.string.isRequired,
+  onSortPopular: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  popular: state.popular,
+  popular: getPopular(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  sortPopular(popular) {
-    dispatch(ActionCreator.sortPopular(popular));
+  onSortPopular(popular) {
+    dispatch(sortPopular(popular));
   },
 });
 

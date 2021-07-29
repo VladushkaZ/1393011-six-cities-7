@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from './useMap';
 import offerProp from '../place-card/offer-prop';
 import { connect } from 'react-redux';
+import { getCity, getOffers } from '../../store/offers/selector';
 function Map({offers, selectedPoint}) {
   const icon = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -21,8 +22,6 @@ function Map({offers, selectedPoint}) {
     if (map) {
       map.setView(new leaflet.LatLng(offers[0].city.location.latitude, offers[0].city.location.longitude), offers[0].city.location.zoom);
       offers.forEach((offer) => {
-        /* eslint no-console: "warn" */
-        console.log(selectedPoint);
         leaflet
           .marker({
             lat: offer.location.latitude,
@@ -42,8 +41,8 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers,
+  city: getCity(state),
+  offers: getOffers(state),
 });
 
 export { Map };

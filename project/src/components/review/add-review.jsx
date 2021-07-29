@@ -70,7 +70,7 @@ function ReviewForm({ onSubmit, id }) {
 }
 ReviewForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
